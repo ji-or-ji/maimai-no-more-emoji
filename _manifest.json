@@ -9,10 +9,10 @@
   },
   "license": "MIT",
   "urls": {
-    "repository": "https://github.com/jiruiyu330784/no-more-emoji",
-    "homepage": "https://github.com/jiruiyu330784/no-more-emoji",
-    "documentation": "https://github.com/jiruiyu330784/no-more-emoji",
-    "issues": "https://github.com/jiruiyu330784/no-more-emoji/issues"
+    "repository": "https://github.com/jiruiyu330784/maimai-no-more-emoji",
+    "homepage": "https://github.com/jiruiyu330784/maimai-no-more-emoji",
+    "documentation": "https://github.com/jiruiyu330784/maimai-no-more-emoji",
+    "issues": "https://github.com/jiruiyu330784/maimai-no-more-emoji/issues"
   },
   "host_application": {
     "min_version": "1.0.0",
