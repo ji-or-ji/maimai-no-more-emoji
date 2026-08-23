@@ -42,6 +42,16 @@ _EMOJI_RANGES: List[Tuple[int, int]] = [
 # ZWJ 序列连接符与肤色修饰符
 _EMOJI_EXTRA_CODEPOINTS = {0x200D, 0x1F3FB, 0x1F3FC, 0x1F3FD, 0x1F3FE, 0x1F3FF}
 
+# 颜文字常用装饰符黑名单（落在 emoji 码段内但属于纯装饰，非表情）：
+# ✦✧✲✳✴✵✶✷✸✹✺✻✼✽✾✿❀❁❂❃❥❦❧ 等
+_EMOJI_EXCLUDED_CODEPOINTS = {
+    0x2726, 0x2727,  # ✦ ✧ 四角星
+    0x2732, 0x2733, 0x2734, 0x2735, 0x2736, 0x2737, 0x2738, 0x2739,
+    0x273A, 0x273B, 0x273C, 0x273D, 0x273E,  # ✲✳✴✵✶✷✸✹✺✻✼✽✾ 星形装饰
+    0x273F, 0x2740, 0x2741, 0x2742, 0x2743,  # ✿❀❁❂❃ 花饰
+    0x2765, 0x2766, 0x2767,  # ❥❦❧ 心形花饰
+}
+
 # ─── emoji → 情绪标签本地映射（对齐麦麦表情库情绪标签风格） ───
 _EMOJI_TO_EMOTION: Dict[str, str] = {
     "😀": "开心", "😁": "开心", "😂": "开心", "🤣": "开心", "😊": "开心",
@@ -74,31 +84,35 @@ _FALLBACK_EMOTION = "开心"
 
 # ─── 正则：提取文本中的 emoji 字符序列 ───
 def _is_emoji_char(ch: str) -> bool:
-    """判断单个字符是否为 emoji（按码点分段）。"""
+    """判断单个字符是否为 emoji（按码点分段，排除颜文字装饰符）。"""
     cp = ord(ch)
+    if cp in _EMOJI_EXCLUDED_CODEPOINTS:
+        return False
     for start, end in _EMOJI_RANGES:
         if start <= cp <= end:
             return True
     return cp in _EMOJI_EXTRA_CODEPOINTS
 
 
-_EMOJI_SEQ_RE = re.compile(
-    r"[\U0001F300-\U0001FAFF"
-    r"\U0001F1E6-\U0001F1FF"
-    r"\U00002600-\U000027BF"
-    r"\U00002B00-\U00002BFF"
-    r"\U0000FE00-\U0000FE0F"
-    r"\U0000200D"
-    r"\U0001F3FB-\U0001F3FF]+"
-)
-
-
 def _extract_emoji(text: str) -> List[str]:
-    """提取文本中的 emoji 序列列表（每个元素是一段连续 emoji）。"""
+    """提取文本中的 emoji 序列列表（每个元素是一段连续 emoji）。
+
+    扫描式实现，与 _is_emoji_char / _remove_emoji 保持同一判定口径。
+    """
     if not text:
         return []
-    found = _EMOJI_SEQ_RE.findall(text)
-    return [seq for seq in found if seq]
+    result: List[str] = []
+    current: List[str] = []
+    for ch in text:
+        if _is_emoji_char(ch):
+            current.append(ch)
+        else:
+            if current:
+                result.append("".join(current))
+                current = []
+    if current:
+        result.append("".join(current))
+    return result
 
 
 def _remove_emoji(text: str) -> str:
