@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 运行时缓存
+.cache/
+emoji_vector_cache.npz
+emoji_vector_cache_meta.json
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# 本地配置备份
+config.toml.bak*
+config_back/

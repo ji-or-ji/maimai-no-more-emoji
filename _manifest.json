@@ -1,0 +1,36 @@
+{
+  "manifest_version": 2,
+  "version": "1.0.0",
+  "name": "麦麦不发emoji了...",
+  "description": "检测出站消息文字里的 emoji，LLM 判断后从表情库选取合适表情包追加到消息末尾",
+  "author": {
+    "name": "jiruiyu330784",
+    "url": "https://github.com/jiruiyu330784"
+  },
+  "license": "MIT",
+  "urls": {
+    "repository": "https://github.com/jiruiyu330784/no-more-emoji",
+    "homepage": "https://github.com/jiruiyu330784/no-more-emoji",
+    "documentation": "https://github.com/jiruiyu330784/no-more-emoji",
+    "issues": "https://github.com/jiruiyu330784/no-more-emoji/issues"
+  },
+  "host_application": {
+    "min_version": "1.0.0",
+    "max_version": "1.99.99"
+  },
+  "sdk": {
+    "min_version": "2.0.0",
+    "max_version": "2.99.99"
+  },
+  "dependencies": [],
+  "capabilities": [
+    "emoji.get_by_description",
+    "llm.generate",
+    "message.get_recent"
+  ],
+  "i18n": {
+    "default_locale": "zh-CN",
+    "supported_locales": ["zh-CN"]
+  },
+  "id": "github.jiruiyu330784.no-more-emoji"
+}

@@ -1,0 +1,15 @@
+[plugin]
+enabled = true
+config_version = "1.0.0"
+
+[judge]
+judge_mode = "auto"
+llm_model = "emoji"
+llm_timeout_seconds = 20
+context_message_limit = 6
+
+[replacer]
+append_at_end = true
+max_replace_per_message = 1
+skip_if_has_emoji_image = true
+min_text_length = 2
