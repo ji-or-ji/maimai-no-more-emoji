@@ -18,4 +18,5 @@ Thumbs.db
 
 # 本地配置备份
 config.toml.bak*
+config.toml
 config_back/
